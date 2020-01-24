@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Courgette');
+@function rem($value) {
+  @return unquote(($value/1px)/16+'rem');
+}
+$easeTime: 0.25s;
+$margin-top: 56px;
+$colors: (
+  'mattBlackLight': '#303337',
+  'mattBlackDark': '#212121',
+  'mattGray': '#878d8d',
+  'mattRed': '#ec6271'
+);
+
+@each $colorName, $colorValue in $colors {
+  .bg-#{$colorName} {
+    background-color: #{$colorValue};
+  }
+  .text-#{$colorName} {
+    color: #{$colorValue};
+  }
+}
+* {
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  height: 1000px;
+  @extend .bg-mattBlackDark;
+  @extend .text-mattGray;
+}
+.wrapper {
+  margin-top: rem($margin-top);
+  .sideMenu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin: rem($margin-top) auto auto;
+    left: 0;
+    width: rem(200px);
+    transition: all ease $easeTime;
+    transform: translateX(-100%);
+    z-index: 2000;
+  }
+  .content {
+    width: 100%;
+    margin-left: rem(0px);
+    transition: all ease $easeTime;
+  }
+  &.active {
+    .sideMenu {
+      transform: translateX(0);
+    }
+  }
+}
+
+.nav-link {
+  align-items: center;
+  display: block;
+  white-space: nowrap;
+  .icon {
+    margin-right: rem(4px);
+    font-size: rem(30px);
+    vertical-align: middle;
+    @extend .text-mattGray;
+    height: rem(32px);
+    width: rem(32px);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .text {
+    font-size: rem(14px);
+    @extend .text-mattGray;
+  }
+  &:hover,
+  &.active {
+    @extend .bg-mattBlackDark;
+    .icon,
+    .text {
+      @extend .text-mattRed;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    .sideMenu {
+      transform: translateX(0);
+    }
+    .content {
+      margin-left: rem(200px);
+    }
+    &.active {
+      .sideMenu {
+        width: rem(80px);
+        .nav-link {
+          text-align: center;
+          .icon {
+            margin-right: 0;
+          }
+          .text {
+            display: none;
+          }
+        }
+      }
+      .content {
+        margin-left: rem(80px);
+      }
+    }
+  }
+}
